@@ -79,8 +79,6 @@ Firstly, return a list of posts and the post_ref paging_state as a tuple.
     def list_posts(paging_state \\ nil) do
       {:ok, page} = PostRefs.list_post_refs(paging_state)
   
-      IO.inspect(page)
-  
       posts = page
       |> Enum.to_list()
       |> Enum.map(& &1["post_id"])
