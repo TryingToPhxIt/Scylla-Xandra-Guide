@@ -1,17 +1,13 @@
 # Installation and Set Up Links
 
-- **Download:** https://www.scylladb.com/download/#tools  
-- **CQL:** http://docs.scylladb.com/stable/get-started/query-data/cql.html  
-- **Keyspaces:** https://docs.scylladb.com/stable/get-started/query-data/schema.html  
-
----
+- **Download   : ** https://www.scylladb.com/download/#tools  
+- **CQL        : ** http://docs.scylladb.com/stable/get-started/query-data/cql.html  
+- **Keyspaces  : ** https://docs.scylladb.com/stable/get-started/query-data/schema.html  
 
 ## CQL
 
 To run CQL commands, open a terminal and run:  
 `cqlsh`
-
----
 
 ## Keyspace
 
