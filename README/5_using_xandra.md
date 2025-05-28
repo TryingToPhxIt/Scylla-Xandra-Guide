@@ -48,6 +48,9 @@ Simple join tables may only require a CQL query folder, whereas tables containin
 
 ### Types
 
+Executions will fail if types do not match. 
+You cannot pass an Integer value as the post_id in the below, it must be a UUID.
+
   ```elixir
     def schema() do
       [
@@ -56,8 +59,6 @@ Simple join tables may only require a CQL query folder, whereas tables containin
       ]
     end
   ```
-Executions will fail if types do not match. 
-You cannot pass an Integer value as the post_id in the above, it must be a UUID.
 
 ###  Order
 
