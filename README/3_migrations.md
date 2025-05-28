@@ -48,22 +48,22 @@ All table modules must be in the format below for migrations to work correctly.
 
 ## Primary Key
 
-  Must be a string starting and ending "()"
+Must be a string starting and ending "()"
 
-| Primary Key Example                   | Description                                                                       |
-|---------------------------------------|-----------------------------------------------------------------------------------|
-| `(post_id)`                           | Single key                                                                        |
-| `((post_id), created_at, comment_id)` | 'post_id' is the partition key; 'created_at' and 'comment_id' are clustering keys |
-| `(user_1, user_2, room_id)`           | Composite primary key with no separate clustering                                 |
+| Primary Key Example                 | Description                                                                       |
+|-------------------------------------|-----------------------------------------------------------------------------------|
+| (post_id)                           | Single key                                                                        |
+| ((post_id), created_at, comment_id) | 'post_id' is the partition key; 'created_at' and 'comment_id' are clustering keys |
+| (user_1, user_2, room_id)           | Composite primary key with no separate clustering                                 |
 
 
 ##  Cluster Key
     
-  Must be a string starting and ending "()"
+Must be a string starting and ending "()"
 
-| Cluster Key Example                   | Description                                    |
-|---------------------------------------|------------------------------------------------|
-| `(created_at DESC)`                   | Single cluster order                           |
-| `(ancestor_id ASC, created_at DESC)`  | Order first by ancestor, then by created_at    |
-| `nil`                                 | No clustering required                         |
+| Cluster Key Example                 | Description                                    |
+|-------------------------------------|------------------------------------------------|
+| (created_at DESC)                   | Single cluster order                           |
+| (ancestor_id ASC, created_at DESC)  | Order first by ancestor, then by created_at    |
+| nil                                 | No clustering required                         |
 
