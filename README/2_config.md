@@ -16,8 +16,6 @@ Run:
 mix deps.get
 ```
 
-----------------------------------------------------------------------
-
 ### config/dev.exs
 
 ```elixir
@@ -26,8 +24,6 @@ config :your_app, :xandra_repo,
   keyspace: "keyspace_name"
 ```
 
-----------------------------------------------------------------------
-
 ### config/test.exs
 
 ```elixir
@@ -35,8 +31,6 @@ config :your_app, :xandra_repo,
   nodes: ["127.0.0.1:9042"],
   keyspace: "keyspace_name"
 ```
-
-----------------------------------------------------------------------
 
 ### lib/scylla/application.ex
 
@@ -54,5 +48,3 @@ end
 ```
 
 > Note: `:scylla_db` is a named value used when executing Xandra queries.
-
-----------------------------------------------------------------------
