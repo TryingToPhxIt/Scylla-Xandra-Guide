@@ -1,8 +1,8 @@
 # Migrations
 
-`priv/repo/migrations/scylla/drop.exs`  
-`priv/repo/migrations/scylla/create.exs`  
-`lib/scylla/database/scylla/scylla/tables/scylla_table_list.ex`
+Drop Tables   : `priv/repo/migrations/scylla/drop.exs`  
+Create Tables : `priv/repo/migrations/scylla/create.exs`  
+Table List    : `lib/scylla/database/scylla/scylla/tables/scylla_table_list.ex`
 
 `create.exs` and `drop.exs` scripts iterate through the `scylla_tables()` list in `tables/scylla_table_list.ex` to create or drop tables.
 
