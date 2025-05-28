@@ -17,19 +17,20 @@ The keyspace is a namespace where tables are stored.
 *(Replace `keyspace_name` with your keyspace name)*
 
 - **CREATE**
-
+  ```cql
   CREATE KEYSPACE IF NOT EXISTS keyspace_name 
   WITH replication = {'class': 'NetworkTopologyStrategy', 'datacenter1': 3} 
   AND TABLETS = {'enabled': false};
 
 - **DELETE**
-
+  ```cql
   DROP KEYSPACE keyspace_name;
 
   Dropping a keyspace will delete all tables within it.
 
 - **VIEW**
 
+  ```cql
   DESCRIBE KEYSPACES;
   DESCRIBE KEYSPACE keyspace_name;
 
