@@ -7,11 +7,7 @@ This is not an "official" file structure for handling Xandra queries, but it is 
 
 Basic examples can be found in:
 
-lib/scylla/database/scylla/xandra/*
-
-##################
-####  Xandra  ####
-##################
+`lib/scylla/database/scylla/xandra/*`
 
 All modules are split into two+ main file types depending on table data complexity and use. 
 Simple join tables may only require a CQL query folder, whereas tables containing complex data may require:
@@ -21,104 +17,99 @@ Simple join tables may only require a CQL query folder, whereas tables containin
 3. Xandra Query Processing
 4. Processing
 
-  /////////////////////
-  ////  CQL Query  ////
-  /////////////////////
+##  CQL Query
 
-  The first module purely contains query statements. 
+```elixir
 
-    defmodule Scylla.PostQuery do
+  defmodule Scylla.PostQuery do
 
-      def create_post_user() do
-        """
-          INSERT INTO post_ref_user (user_id, post_id, created_at)
-          VALUES (12, ?, ?)
-        """
-      end
-
-      def list_posts_by_id() do
-        """
-          SELECT * FROM posts 
-          WHERE post_id IN ?
-        """
-      end  
-
-      def delete_post() do
-        """
-          DELETE FROM posts
-          WHERE post_id = ?
-        """
-      end
+    def create_post_user() do
+      """
+        INSERT INTO post_ref_user (user_id, post_id, created_at)
+        VALUES (12, ?, ?)
+      """
     end
 
-    Notes: 
-      
-      |||||||||||||||||
-      ||||  Types  ||||
-      |||||||||||||||||
+    def list_posts_by_id() do
+      """
+        SELECT * FROM posts 
+        WHERE post_id IN ?
+      """
+    end  
 
-      def schema() do
-        [
-          post_id:    "UUID",
-          created_at: "TIMESTAMP"
-        ]
-      end
+    def delete_post() do
+      """
+        DELETE FROM posts
+        WHERE post_id = ?
+      """
+    end
+  end
+```
 
-      Executions will fail if types do not match. 
-      You cannot pass an Integer value as the post_id in the above, it must be a UUID.
+### Types
 
-      |||||||||||||||||
-      ||||  Order  ||||
-      |||||||||||||||||
+  ```elixir
+    def schema() do
+      [
+        post_id:    "UUID",
+        created_at: "TIMESTAMP"
+      ]
+    end
+  ```
+Executions will fail if types do not match. 
+You cannot pass an Integer value as the post_id in the above, it must be a UUID.
 
-      def create_post() do
-        """
-          INSERT INTO posts (
-            post_id, user_id, board_id, parent_id,
-            type,
-            user_tag, board_tag,
-            quote, deleted, status_reason,
-            privacy, 
-            title, body, 
-            media_layout,
-            contains_poll,
-            send_notification, upvote_notification, comment_notification, 
-            created_at, updated_at
-          ) 
-          VALUES 
-          (
-            ?, ?, ?, ?,      -- Ids
-            ?,               -- Type
-            ?, ?,            -- Tags
-            ?, false, null,  -- Status
-            ?,               -- Privacy
-            ?, ?,            -- Text Content
-            ?,               -- Media Layout
-            ?,               -- Contains Poll
-            ?, ?, ?,         -- Notifications
-            ?, ?             -- Datetime
-          )
-        """
-      end
+###  Order
 
-      Order matters. For setting defaults, values can be hardcoded like in the above.
-      Rather than type all values in a row, split them into groups like and mark them with -- Flags.
+Order matters. For setting defaults, values can be hardcoded like the status values below.
+Rather than type all values in a row, split them into groups and mark them with `-- flags`.
 
-      Omitting a value will set it to null in Scylla.
-      
-      "status_reason" could be omitted from the query entirely, and would default to null.
+Omitting a value will set it to null in Scylla, `status_reason` could be omitted from the query entirely, and would default to null.
 
+  ```elixir
+    def create_post() do
+      """
+        INSERT INTO posts (
+          post_id, user_id, board_id, parent_id,
+          type,
+          user_tag, board_tag,
+          quote, deleted, status_reason,
+          privacy, 
+          title, body, 
+          media_layout,
+          contains_poll,
+          send_notification, upvote_notification, comment_notification, 
+          created_at, updated_at
+        ) 
+        VALUES 
+        (
+          ?, ?, ?, ?,      -- Ids
+          ?,               -- Type
+          ?, ?,            -- Tags
+          ?, false, null,  -- Status
+          ?,               -- Privacy
+          ?, ?,            -- Text Content
+          ?,               -- Media Layout
+          ?,               -- Contains Poll
+          ?, ?, ?,         -- Notifications
+          ?, ?             -- Datetime
+        )
+      """
+    end
+  ```
 
+## Xandra Query Execution
 
-  //////////////////////////////////
-  ////  Xandra Query Execution  ////
-  //////////////////////////////////
+  Note: Do not add Xandra.prepare!(:scylla_db, *) into memory, it will not work as @types are loaded as :scylla_db is being set up.
 
-  The second module contains the actual Xandra execute functions.
-  
-  Note: Do not add Xandra.prepare!(:scylla_db, *) into memory, it will not work. Only the statement.
-
+  ```elixir
   defmodule Scylla.Posts do
+
+    @get_post PostQuery.get_post()
+  
+    def get_post(post_id) do
+      Xandra.execute(:scylla_db, Xandra.prepare!(:scylla_db, @get_post), [post_id])
+    end
 
     @delete_post         PostQuery.delete_post() 
     @delete_post_user    PostQuery.delete_post_user() 
@@ -142,14 +133,11 @@ Simple join tables may only require a CQL query folder, whereas tables containin
       end
     end
   end
+```
 
-
-  ///////////////////////////////////
-  ////  Xandra Query Processing  ////
-  ///////////////////////////////////
-
-  The third main module is for the more "messy" parts of the code that happen before/after the query execution. 
-
+##  Xandra Query Processing
+  
+```elixir
   defmodule Scylla.Post do
 
     def new_post_values(user, post_id, date, socket, params) do
@@ -173,9 +161,13 @@ Simple join tables may only require a CQL query folder, whereas tables containin
       end
     end
   end
+```
 
-  The above is used in the batch below as the argument for the final batch.
+The above is used in the batch below as the argument for the final batch.
 
+For complex data structures, create a query processing module to handle the variable list.
+
+```elixir
     batch =
     Xandra.Batch.new()
     |> handle_hashtags(hashtags, post_id, date)
@@ -184,16 +176,15 @@ Simple join tables may only require a CQL query folder, whereas tables containin
     |> Xandra.Batch.add(Xandra.prepare!(:scylla_db, user_query), [current_user.id, post_id, date])
     |> Xandra.Batch.add(Xandra.prepare!(:scylla_db, @create_post_metrics), [post_id, date, date])
     |> Xandra.Batch.add(Xandra.prepare!(:scylla_db, @create_post), Post.new_post_values(current_user, post_id, date, socket, params))
- 
+ ```
 
-  //////////////////////
-  ////  Processing  ////
-  //////////////////////
+## Processing
 
-  For complex data that requires processing from multiple sources, create a dedicated processing module.
+For complex data that requires processing from multiple sources, create a dedicated processing module.
 
-  The below pulls data from multiple Scylla tables, Elasticsearch and Redis to "build" a post. 
+The below pulls data from multiple Scylla tables, Elasticsearch and Redis to "build" a post.
 
+```elixir
   defmodule Scylla.PostProcess do
 
     def process_posts(user_id, post_ids, client_id) do
@@ -263,3 +254,4 @@ Simple join tables may only require a CQL query folder, whereas tables containin
       end)
     end
   end
+```
