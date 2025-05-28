@@ -1,56 +1,40 @@
-#########################################
-####  Installation and Set Up Links  ####
-#########################################
+# Installation and Set Up Links
 
-Download  :  https://www.scylladb.com/download/#tools
-CQL       :  http://docs.scylladb.com/stable/get-started/query-data/cql.html
-Keyspaces :  https://docs.scylladb.com/stable/get-started/query-data/schema.html
+- **Download:** https://www.scylladb.com/download/#tools  
+- **CQL:** http://docs.scylladb.com/stable/get-started/query-data/cql.html  
+- **Keyspaces:** https://docs.scylladb.com/stable/get-started/query-data/schema.html  
 
-----------------------------------------------------------------------
-----------------------------------------------------------------------
-----------------------------------------------------------------------
+---
 
-###############
-####  CQL  ####
-###############
+## CQL
 
-To run cql commands, open a terminal and run: 'cqlsh'
+To run CQL commands, open a terminal and run:  
+`cqlsh`
 
-----------------------------------------------------------------------
-----------------------------------------------------------------------
-----------------------------------------------------------------------
+---
 
-####################
-####  Keyspace  ####
-####################
+## Keyspace
 
-The keyspace is a namespace where tables are stored. 
+The keyspace is a namespace where tables are stored.
 
-Keyspace commands:
+**Keyspace commands:**  
+*(Replace `keyspace_name` with your keyspace name)*
 
-  Note: Replace 'keyspace_name' with your keyspace name. 
-  
-  // CREATE
+- **CREATE**
 
   CREATE KEYSPACE IF NOT EXISTS keyspace_name 
   WITH replication = {'class': 'NetworkTopologyStrategy', 'datacenter1': 3} 
   AND TABLETS = {'enabled': false};
 
-  // DELETE
+- **DELETE**
 
   DROP KEYSPACE keyspace_name;
 
   Dropping a keyspace will delete all tables within it.
 
-  // VIEW
+- **VIEW**
 
   DESCRIBE KEYSPACES;
   DESCRIBE KEYSPACE keyspace_name;
 
   Describing keyspaces will show all keyspace names, whereas describing the keyspace_name will show the entire config of the keyspace including all table configs.
-
-----------------------------------------------------------------------
-----------------------------------------------------------------------
-----------------------------------------------------------------------
-
-End
