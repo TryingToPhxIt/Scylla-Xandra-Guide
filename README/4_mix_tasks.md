@@ -4,16 +4,10 @@
 
 **Commands:**
 
-- `mix scylla.create`  
-- `mix scylla.drop all`  
-- `mix scylla.drop table_name`  
-- `mix scylla.seeds`  
-- `mix scylla.reset`
-
-| Command          | Description                                                        |
-|------------------|--------------------------------------------------------------------|
-| Create           | Creates all tables. If a table already exists, it will be skipped. |
-| Drop All         | Drops all tables.                                                  |
-| Drop table_name  | Drops a specific named table. Use with caution.                    |
-| Seeds            | Can be used to seed the database.                                  |
-| Reset            | Drops all tables, creates all tables, then runs seeds.             |
+| Command                      | Description                                                        |
+|------------------------------|--------------------------------------------------------------------|
+| `mix scylla.create`          | Creates all tables. If a table already exists, it will be skipped. |
+| `mix scylla.drop all`        | Drops all tables.                                                  |
+| `mix scylla.drop table_name` | Drops a specific named table. Use with caution.                    |
+| `mix scylla.seeds`           | Can be used to seed the database.                                  |
+| `mix scylla.reset`           | Drops all tables, creates all tables, then runs seeds.             |
