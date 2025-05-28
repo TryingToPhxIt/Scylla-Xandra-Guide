@@ -64,12 +64,11 @@ You cannot pass an Integer value as the post_id in the below, it must be a UUID.
 
 ###  Order
 
-Variables and Values in queries pair up in the order they are assigned.
-
-For setting defaults, values can be hardcoded like the status values below.
-Rather than type all values in a row, split them into groups and mark them with `-- flags`.
+For large lists, split them into groups like the below and mark them with `-- flags`.
 
 Omitting a value will set it to null in Scylla, `status_reason` could be omitted from the query entirely, and would default to null.
+
+The number of variables and the order of variables in the execute, query and values must match. 
 
   ```elixir
     def create_post() do
