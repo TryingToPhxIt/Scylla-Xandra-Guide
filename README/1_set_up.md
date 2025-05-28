@@ -23,15 +23,18 @@ The keyspace is a namespace where tables are stored.
   AND TABLETS = {'enabled': false};
 
 - **DELETE**
+Dropping a keyspace will delete all tables within it.
+
   ```cql
   DROP KEYSPACE keyspace_name;
+ 
 
-  Dropping a keyspace will delete all tables within it.
 
 - **VIEW**
+Describing keyspaces will show all keyspace names, whereas describing the keyspace_name will show the entire config of the keyspace including all table configs.
 
   ```cql
   DESCRIBE KEYSPACES;
   DESCRIBE KEYSPACE keyspace_name;
 
-  Describing keyspaces will show all keyspace names, whereas describing the keyspace_name will show the entire config of the keyspace including all table configs.
+
