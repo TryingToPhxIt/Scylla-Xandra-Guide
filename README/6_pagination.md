@@ -107,9 +107,11 @@ hits nil, as executing queries with nil/invalid paging_states will cause errors.
 
 Click the button to trigger the event.
 
+  ```elixir
   <.button :if={@paging_state} phx-click="load more">
     Load More
   </.button>
+  ```
 
 Pass the current paging_state in the socket to the function, then assign the new paging_state in its place.
 
