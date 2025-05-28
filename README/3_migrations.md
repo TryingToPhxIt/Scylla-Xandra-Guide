@@ -61,6 +61,9 @@ All table modules must be in the format below for migrations to work correctly.
     
   Must be a string starting and ending "()"
 
-  - "(created_at DESC)"                   :  Single cluster order
-  - "(ancestor_id ASC, created_at DESC)"  :  Order first by ancestor, then by created_at
-  - nil                                   :  No Clustering required
+| Cluster Key Example                   | Description                                    |
+|---------------------------------------|------------------------------------------------|
+| `(created_at DESC)`                   | Single cluster order                           |
+| `(ancestor_id ASC, created_at DESC)`  | Order first by ancestor, then by created_at    |
+| `nil`                                 | No clustering required                         |
+
