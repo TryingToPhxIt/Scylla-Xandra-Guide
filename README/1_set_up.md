@@ -1,6 +1,6 @@
 # Set Up and Basic Info
 
-This guide assumes you can already create/start and basic LiveView app.
+This guide assumes you can already create/start a basic LiveView app.
 
 - **Download   :** https://www.scylladb.com/download/#tools  
 - **CQL        :** http://docs.scylladb.com/stable/get-started/query-data/cql.html  
