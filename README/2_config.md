@@ -1,7 +1,3 @@
-##################
-####  Config  ####
-##################
-
 https://hex.pm/packages/xandra
 
 ### mix.exs
