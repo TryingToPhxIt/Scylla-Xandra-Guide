@@ -64,7 +64,9 @@ You cannot pass an Integer value as the post_id in the below, it must be a UUID.
 
 ###  Order
 
-Order matters. For setting defaults, values can be hardcoded like the status values below.
+Variables and Values in queries pair up in the order they are assigned.
+
+For setting defaults, values can be hardcoded like the status values below.
 Rather than type all values in a row, split them into groups and mark them with `-- flags`.
 
 Omitting a value will set it to null in Scylla, `status_reason` could be omitted from the query entirely, and would default to null.
