@@ -50,9 +50,12 @@ All table modules must be in the format below for migrations to work correctly.
 
   Must be a string starting and ending "()"
 
-  - "(post_id)"                             : Single key
-  - "((post_id), created_at, comment_id)"   : 'post_id' is the partition key; 'created_at' and 'comment_id' are clustering keys.
-  - "(user_1, user_2, room_id)"             : Composite primary key with no separate clustering.
+| Primary Key Example                   | Description                                                                       |
+|---------------------------------------|-----------------------------------------------------------------------------------|
+| `(post_id)`                           | Single key                                                                        |
+| `((post_id), created_at, comment_id)` | 'post_id' is the partition key; 'created_at' and 'comment_id' are clustering keys |
+| `(user_1, user_2, room_id)`           | Composite primary key with no separate clustering                                 |
+
 
 ##  Cluster Key
     
