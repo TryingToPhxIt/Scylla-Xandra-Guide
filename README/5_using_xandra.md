@@ -2,7 +2,7 @@ For full info on Xandra:
 
 https://hexdocs.pm/xandra/Xandra.html
 
-The below is not an explanation of how to use all of Xandra's features, but how to manage it in terms of file structure.
+The below is not an explanation of how to use all of Xandra's features, but how to manage the file structure.
 This is not an "official" file structure for handling Xandra queries, but it is a consistent way to seperate concerns if you are new to Scylla/Xandra.
 
 Basic examples can be found in:
