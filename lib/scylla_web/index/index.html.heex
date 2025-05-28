@@ -1,0 +1,40 @@
+<%= if @live_action === :index do %>
+  <div class="flex justify-end mb-4">
+    <.link navigate={~p"/create"} class="bg-gray-800 text-white hover:bg-gray-900 px-4 py-2 rounded ml-auto block">
+      Create
+    </.link>
+  </div>
+
+  <div :for={post <- @posts} class="p-4 border rounded-md mb-4 space-y-2">
+    <div class="flex items-center gap-x-2">
+      <h2 class="text-lg font-semibold"><%= post["title"] %></h2>
+      <.link navigate={"/edit/#{post["post_id"]}"} class="ml-auto text-sm text-blue-600 hover:underline">
+        Edit
+      </.link>
+
+      <.link phx-click="delete post" phx-value-post_id={post["post_id"]} class="text-sm text-blue-600 hover:underline" data-confirm="Are you sure?">Delete</.link>
+    </div>
+    <p class="text-gray-700"><%= post["body"] %></p>
+  </div>
+
+    <.button :if={@paging_state} phx-click="load more" class="bg-gray-800 text-white hover:bg-gray-900 px-4 py-2 rounded mx-auto block">
+      Load More
+    </.button>
+<% end %>
+
+<%= if @live_action === :create do %>
+  <.live_component
+    module={ScyllaWeb.NewPost.FormComponent}
+    id={"new-post-form-component"}
+    action={@live_action}
+  />
+<% end %>
+
+<%= if @live_action === :edit do %>
+  <.live_component
+    module={ScyllaWeb.EditPost.FormComponent}
+    id={"edit-post-form-component"}
+    action={@live_action}
+    post={@post}
+  />
+<% end %>
