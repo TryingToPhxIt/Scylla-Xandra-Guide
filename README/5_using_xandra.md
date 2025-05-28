@@ -19,6 +19,8 @@ Simple join tables may only require a CQL query folder, whereas tables containin
 
 ##  CQL Query
 
+Create a module dedicated to storing query data.
+
 ```elixir
 
   defmodule Scylla.PostQuery do
@@ -101,7 +103,9 @@ Omitting a value will set it to null in Scylla, `status_reason` could be omitted
 
 ## Xandra Query Execution
 
-  Note: Do not add Xandra.prepare!(:scylla_db, *) into memory, it will not work as @types are loaded as :scylla_db is being set up.
+This module is purely dedicated to executing queries. It should pull queires from CQL Query and if required pull query variables from a Query Processing module.
+
+  Note: Do not add Xandra.prepare!(:scylla_db, *) into memory, it will not work as @types are loaded at the same time :scylla_db is being set up.
 
   ```elixir
   defmodule Scylla.Posts do
@@ -164,7 +168,7 @@ Omitting a value will set it to null in Scylla, `status_reason` could be omitted
   end
 ```
 
-The above is used in the batch below as the argument for the final batch.
+The above is used in the batch below as the variable list for the final batch.
 
 For complex data structures, create a query processing module to handle the variable list.
 
@@ -181,7 +185,7 @@ For complex data structures, create a query processing module to handle the vari
 
 ## Processing
 
-For complex data that requires processing from multiple sources, create a dedicated processing module.
+For complex data that requires processing from multiple sources, create a dedicated processing module that pulls from the Xandra Query Execution module.
 
 The below pulls data from multiple Scylla tables, Elasticsearch and Redis to "build" a post.
 
