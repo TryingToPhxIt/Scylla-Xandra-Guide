@@ -27,8 +27,6 @@ Dropping a keyspace will delete all tables within it.
 
   ```cql
   DROP KEYSPACE keyspace_name;
- 
-
 
 - **VIEW**
 Describing keyspaces will show all keyspace names, whereas describing the keyspace_name will show the entire config of the keyspace including all table configs.
@@ -36,5 +34,3 @@ Describing keyspaces will show all keyspace names, whereas describing the keyspa
   ```cql
   DESCRIBE KEYSPACES;
   DESCRIBE KEYSPACE keyspace_name;
-
-
